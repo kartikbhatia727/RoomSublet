@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>All users</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+
+</head>
+<body>
+<div class="container text-center">
+
+<div >
+<h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+<h2>Welcome <span sec:authentication="name"></span></h2> 
+<h3><a th:href="@{posts}">Add Post</a></h3>
+<form id="logoutForm" th:action="@{/logout}" method="post">
+<input type="submit" value="Sign Out" />
+</form>
+</div>
+</div>
+
+<h3><a th:href="@{list_posts}">List All Posts</a></h3>
+<div>
+<table class="table table-striped table-bordered">
+<thead class="theme-dark">
+<tr>
+<!-- <th> -->
+<!-- Post ID -->
+<!-- </th> -->
+<th>Title</th>
+<th>Description</th>
+<th>Location</th>
+</tr>
+<tbody>
+<tr th:each="post :${listPosts}">
+<!-- <td th:text ="${post.postid}"> Post ID</td> -->
+<td th:text ="${post.title}"> Title</td>
+<td th:text ="${post.description}"> Description</td>
+ <td th:text ="${post.location}"> Location</td> 
+<td><a th:href="@{'/posts/edit/'+${post.postid}}">Edit</a>
+&nbsp;
+<a th:href="@{'/posts/delete/'+${post.postid}}">Delete</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

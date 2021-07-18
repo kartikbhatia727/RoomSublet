@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Create post</title>
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+
+</head>
+<body>
+<div class="container text-center">
+<div th:if="${post.postid ==null}"><h1>Create New Post</h1></div>
+<div th:unless="${post.postid ==null}"><h1>Edit Post</h1></div>
+<form th:action="@{/posts/save}" th:object="${post}" method="post" style="max-width: 600px;margin: 0 auto;">
+<input type="hidden" th:field="*{postid}" th:value="${post.postid}" /> 
+<div class="m-3">
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Title</label>
+		<div class="col-sm-8">
+		     <input type="text" th:field="*{title}" class="form-control" required />
+		</div>
+</div>
+
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Description</label>
+		<div class="col-sm-8">
+		     <textarea rows="5" cols="25" th:field="*{description}" class="form-control" required >
+		     </textarea>
+		  
+		</div>
+</div>
+
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Location</label>
+		<div class="col-sm-8">
+		     <select th:field="*{location}">
+		     <option th:each="l :${loc}" th:value="${l}" th:text="${l}" />
+		     </select> 
+		</div>
+</div>
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Rent</label>
+		<div class="col-sm-8">
+		     <input type="number" th:field="*{rent}" class="form-control" required />
+		</div>
+</div>
+
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Utilities</label>
+		<div class="col-sm-8">
+<!-- 		<input type="text" th:field="*{utilities}" class="form-control" required /> -->
+		     <ul>
+			  <li th:each="feat : ${util}">
+			    <input type="checkbox" th:field="*{utilities}" th:value="${feat}" />
+			    <label th:for="${#ids.prev('utilities')}" 
+			           th:text="#{${ feat}}">Heating</label>
+			  </li>
+			</ul>
+		</div>
+</div>
+<div class="form-group row">
+		<label class="col-form-label col-sm-4">Preferences</label>
+		<div class="col-sm-8">
+		     <input type="radio" th:field="*{preferences}" class="form-control" required value="Male" />Male
+		     <input type="radio" th:field="*{preferences}" class="form-control" required value="Female" />Female
+		     <input type="radio" th:field="*{preferences}" class="form-control" required value="Any" />Any
+		</div>
+</div>
+
+
+<div class="text-center p-3">
+<button type="submit" class="btn btn-primary">Save</button>
+</div>
+
+</div>
+
+</form>
+</div>
+</body>
+</html>
